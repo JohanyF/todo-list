@@ -30,6 +30,10 @@ ul {
     flex: 0.8;
 }
 
+.hamburgerIcon {
+    transform: scale(0.5);
+}
+
 .header-text {
     flex: 1;
     font-size: 48px;
@@ -44,6 +48,66 @@ ul {
     width: 350px;
     padding: 20px;
     background-color: #F5F3F5;
+}
+
+.task-filter {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.section {
+    color: #000;
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    display: flex;
+    align-items: center;
+}
+
+.icons {
+    height: 27px;
+    width: 27px;
+}
+
+.projects-container {
+    margin-top: 1rem;
+}
+
+.project-text {
+    color: #000;
+    font-size: 2.25rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    border-bottom: 1px solid black;
+    padding-bottom: 8px;
+}
+
+.projects-list {
+    margin-top: 8px;
+}
+
+#project-add {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background-color: transparent;
+    color: #000;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+
+    margin: 1rem;
+    padding: 1rem;
+}
+
+.addIcon {
+    height: 20px;
+    width: 20px;
 }
 
 .content {
