@@ -9,23 +9,23 @@
     <div class="container">
         <header class="header">
             <div class="hamburger-icon">
-                Placeholder for Icon SVG
+                <!-- Placeholder for Icon SVG -->
             </div>
             <div class="header-text">Todo List</div>
         </header>
         <main class="main">
             <aside class="sidebar">
-                <div class="">
-                    <ul>
-                        <li>Inbox</li>
-                        <li>Today</li>
-                        <li>Project</li>
+                <div class="task-filter-container">
+                    <ul class="task-filter">
+                        <li id="inbox" class="section">Inbox</li>
+                        <li id="today" class="section">Today</li>
+                        <li id="upcoming" class="section">Upcoming</li>
                     </ul>
                 </div>
-                <div>
-                    <h1>Projects</h1>
-                    <ul>
-                        <li>Inbox</li>
+                <div class="projects-container">
+                    <h1 class="project-text">Projects</h1>
+                    <ul class="projects-list">
+                        <li><button type="button" id="project-add">Add Project</button></li>
                     </ul>
                 </div>
             </aside>
