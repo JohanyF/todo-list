@@ -23,7 +23,7 @@
                     </ul>
                 </div>
                 <div class="projects-container">
-                    <h1 class="project-text">Projects</h1>
+                    <h2 class="project-text">Projects</h2>
                     <ul class="projects-list">
                         <li><button type="button" id="project-add">Add Project</button></li>
                     </ul>
@@ -31,21 +31,23 @@
             </aside>
             <div class="content">
                 <div class="content-header">
-                    <h1>Today</h1>
-                    <button type="button">+ Add Task</button>
+                    <h1 class="todayText">Today</h1>
+                    <button type="button" class="add-task">+ Add Task</button>
                 </div>
                 <div class="task">
-                    <input type="checkbox" name="task-completed" id="task-completed">
+                    <div class="checkbox">
+                        <input type="checkbox" name="task-completed" id="task-completed">
+                    </div>
                     <div class="task-info">
-                        <p>Title of Task</p>
-                        <p>Description of Task</p>
+                        <p class="title">Title of Task</p>
+                        <p title="description">Description of Task</p>
                     </div>
                     <div class="task-date">
-                        <p>Date Here</p>
+                        <p>7/22/24</p>
                     </div>
                     <div class="task-icons">
-                        <div>Edit</div>
-                        <div>Delete</div>
+                        <div id="edit"></div>
+                        <div id="delete"></div>
                     </div>
                 </div>
             </div>
