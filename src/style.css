@@ -4,8 +4,8 @@
     margin: 0;
 }
 
-h1 {
-    color: blue;
+body {
+    font-family: sans-serif;
 }
 
 ul {
@@ -36,7 +36,7 @@ ul {
 
 .header-text {
     flex: 1;
-    font-size: 48px;
+    font-size: 4rem;
 }
 
 .main {
@@ -64,6 +64,7 @@ ul {
     line-height: normal;
     display: flex;
     align-items: center;
+    gap: 8px;
 }
 
 .icons {
@@ -103,6 +104,7 @@ ul {
 
     margin: 1rem;
     padding: 1rem;
+    gap: 8px;
 }
 
 .addIcon {
@@ -120,8 +122,26 @@ ul {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid black;
+    border-bottom: 2px solid black;
     padding-bottom: 8px;
+    margin-bottom: 16px;
+}
+
+.todayText {
+    font-size: 3rem;
+}
+
+.add-task {
+    border-radius: 0.75rem;
+    background: #1B264F;
+    border: none;
+    padding: 0.5rem;
+    color: #FFF;
+    text-align: center;
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
 }
 
 .task {
@@ -135,6 +155,16 @@ ul {
 .task-info {
     color: white;
     flex: 2;
+    margin-left: 12px;
+}
+
+.title {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.description {
+    font-size: 14px;
 }
 
 .task-date {
@@ -145,5 +175,30 @@ ul {
 .task-icons {
     color: white;
     display: flex;
-    flex-wrap: wrap;
+    gap: 12px;
 }
+
+input[type="checkbox"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #eee;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  input[type="checkbox"]:checked {
+    background: #858585;
+    border-color: #858585;
+    position: relative;
+  }
+  
+  input[type="checkbox"]:checked::before {
+    content: "\2714";
+    position: absolute;
+    top: -3px;
+    left: 2px;
+    color: white;
+    font-size: 16px;
+  }
