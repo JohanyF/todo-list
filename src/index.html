@@ -52,6 +52,41 @@
                 </div>
             </div>
         </main>
+        <dialog id="modal">
+            <form method="dialog" name="taskForm" id="taskForm">
+                <div class="input-container">
+                    <label for="task">Task: </label>
+                    <input type="text" name="task" id="task" placeholder="What would you like to do?" required>
+                </div>
+                <div class="input-container">
+                    <label for="description">Task Description: </label>
+                    <textarea type="text" name="description" id="description" placeholder="Add Task Description..." rows="5" cols="33" wrap="hard" required></textarea>
+                </div>
+                <div class="input-container">
+                    <label for="date">Date: </label>
+                    <input type="date" name="date" id="date" required>
+                </div>
+                <div class="dropdown-container">
+                    <label for="priority">Priority: </label>
+                    <select name="priority" id="priority">
+                        <option value="inbox">Low</option>
+                        <option value="inbox">Medium</option>
+                        <option value="inbox">High</option>
+                    </select>
+
+                    <label for="projects">Project: </label>
+                    <select name="projects" id="projects">
+                        <option value="inbox">Inbox</option>
+                    </select>
+                </div>
+
+                <div class="modal-btns">
+                    <button type="button" class="cancel-btn" value="cancel" formmethod="dialog">Cancel</button>
+                    <button type="submit" class="submit-btn" value="default">Submit</button>
+                </div>
+
+            </form>
+        </dialog>
     </div>
 </body>
 </html>
