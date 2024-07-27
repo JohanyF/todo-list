@@ -29,7 +29,6 @@ cancelBtn.addEventListener("click", (event) => {
 
 submitBtn.addEventListener("click", (event) => {
     event.preventDefault();
-    console.log("BTN WORKKSSS")
     inboxTest.addTask(DOMhander.taskTitle.value, DOMhander.description.value, DOMhander.date.value, DOMhander.priority.value, DOMhander.projects.value);
     inboxTest.printTasks();
     DOMhander.renderNewTask(inboxTest.tasks.length-1);
