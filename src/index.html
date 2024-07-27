@@ -9,7 +9,6 @@
     <div class="container">
         <header class="header">
             <div class="hamburger-icon">
-                <!-- Placeholder for Icon SVG -->
             </div>
             <div class="header-text">Todo List</div>
         </header>
@@ -31,24 +30,10 @@
             </aside>
             <div class="content">
                 <div class="content-header">
-                    <h1 class="todayText">Today</h1>
+                    <h1 class="todayText">Inbox</h1>
                     <button type="button" class="add-task">+ Add Task</button>
                 </div>
-                <div class="task">
-                    <div class="checkbox">
-                        <input type="checkbox" name="task-completed" id="task-completed">
-                    </div>
-                    <div class="task-info">
-                        <p class="title">Title of Task</p>
-                        <p title="description">Description of Task</p>
-                    </div>
-                    <div class="task-date">
-                        <p>7/22/24</p>
-                    </div>
-                    <div class="task-icons">
-                        <div id="edit"></div>
-                        <div id="delete"></div>
-                    </div>
+                <div class="tasks-container">
                 </div>
             </div>
         </main>
@@ -69,9 +54,9 @@
                 <div class="dropdown-container">
                     <label for="priority">Priority: </label>
                     <select name="priority" id="priority">
-                        <option value="inbox">Low</option>
-                        <option value="inbox">Medium</option>
-                        <option value="inbox">High</option>
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
                     </select>
 
                     <label for="projects">Project: </label>
