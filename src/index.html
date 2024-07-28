@@ -24,8 +24,16 @@
                 <div class="projects-container">
                     <h2 class="project-text">Projects</h2>
                     <ul class="projects-list">
-                        <li><button type="button" id="project-add">Add Project</button></li>
+                        <!-- <li>Inbox</li> -->
                     </ul>
+                    <form id="add-project-container" class="none">
+                        <input type="text" name="add-project" id="add-project">
+                        <div class="project-icons">
+                            <button type="submit" class="submit-project-btn" value="default"></button>
+                            <button type="button" class="cancel-project-btn" value="cancel"></button>
+                        </div>
+                    </form>
+                    <button type="button" id="project-add">Add Project</button>
                 </div>
             </aside>
             <div class="content">
@@ -37,7 +45,7 @@
                 </div>
             </div>
         </main>
-        <dialog id="modal">
+        <dialog id="task-modal">
             <form method="dialog" name="taskForm" id="taskForm">
                 <div class="input-container">
                     <label for="task">Task: </label>
@@ -72,6 +80,7 @@
 
             </form>
         </dialog>
+        
     </div>
 </body>
 </html>
