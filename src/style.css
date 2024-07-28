@@ -23,7 +23,11 @@ dialog {
     border-radius: 16px;
 }
 
-form {
+input {
+    padding: 0.25rem;
+}
+
+#taskForm {
     padding: 1.6rem;
     display: flex;
     flex-direction: column;
@@ -105,6 +109,36 @@ form {
     padding-bottom: 8px;
 }
 
+#add-project-container {
+    margin-top: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.icons-24 {
+    height: 24px;
+    width: 24px;
+}
+
+.submit-project-btn,
+.cancel-project-btn {
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.add-project-container {
+    margin-top: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.none {
+    display: none !important;
+}
+
 .projects-list {
     margin-top: 8px;
 }
@@ -121,7 +155,7 @@ form {
     font-weight: 400;
     line-height: normal;
 
-    margin: 1rem;
+    margin: 0.5rem 1rem;
     padding: 1rem;
     gap: 8px;
 }
@@ -198,8 +232,9 @@ form {
     flex: 1;
 }
 
-.task-icons {
-    color: white;
+.task-icons,
+.project-icons {
+    /* color: white; */
     display: flex;
     gap: 12px;
 }
