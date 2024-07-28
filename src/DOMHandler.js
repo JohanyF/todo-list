@@ -4,13 +4,20 @@ import Date from './img/date-icon.svg';
 import Add from './img/add-icon.svg';
 import Edit from './img/edit-icon.svg';
 import Delete from './img/delete-icon.svg';
+import Check from './img/check-icon.svg';
+import Cancel from './img/cancel-icon.svg';
 
 
 export default class DOMHandler {
-    modal = document.querySelector("#modal");
+    taskModal = document.querySelector("#task-modal");
     addBtn = document.querySelector(".add-task");
     cancelBtn = document.querySelector(".cancel-btn");
     submitBtn = document.querySelector(".submit-btn")
+    addProjectBtn = document.querySelector("#project-add");
+    projectForm = document.querySelector(".none");
+
+    checkBtn = document.querySelector(".check");
+    cancelProjectBtn = document.querySelector(".cancel");
 
     taskTitle = document.querySelector("#task");
     description = document.querySelector("#description");
@@ -19,13 +26,30 @@ export default class DOMHandler {
     projects = document.querySelector("#projects");
 
 
-    get modal() {
-        return this._modal;
+    get taskModal() {
+        return this._taskModal;
     }
 
     get addBtn() {
         return this._addBtn;
     }
+
+    get addProjectBtn() {
+        return this._addProjectBtn;
+    }
+
+    get projectForm() {
+        return this._projectForm;
+    }
+
+    get checkBtn() {
+        return this._checkBtn;
+    }
+
+    get cancelProjectBtn() {
+        return this._cancelProjectBtn;
+    }
+
 
     get cancelBtn() {
         return this._cancelBtn;
@@ -84,6 +108,22 @@ export default class DOMHandler {
         upcomingIcon.classList.add("icons");
 
         upcoming.prepend(upcomingIcon);
+
+        // const projectIcons = document.querySelector(".project-icons");
+
+        const checkBtn = document.querySelector(".submit-project-btn");
+        const cancelProjectBtn = document.querySelector(".cancel-project-btn");
+
+        const checkIcon = new Image();
+        checkIcon.src = Check;
+        checkIcon.classList.add("icons-24");
+
+        const cancelIcon = new Image();
+        cancelIcon.src = Cancel;
+        cancelIcon.classList.add("icons-24");
+
+        checkBtn.appendChild(checkIcon);
+        cancelProjectBtn.appendChild(cancelIcon);
 
         const addProjectBtn = document.querySelector("#project-add");
 
