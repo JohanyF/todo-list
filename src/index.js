@@ -6,20 +6,24 @@ import DOMHandler from './DOMHandler.js';
 let DOMhander = new DOMHandler();
 
 DOMhander.loadSVGs();
-
+let projectList = [];
 let inboxTest = new Project("Inbox");
+projectList.push(inboxTest);
 
 const addBtn = DOMhander.addBtn;
 const addProjectBtn = DOMhander.addProjectBtn;
 const cancelBtn = DOMhander.cancelBtn;
 const submitBtn = DOMhander.submitBtn;
+const checkBtn = DOMhander.checkBtn;
+const cancelProjectBtn = DOMhander.cancelProjectBtn;
 
-console.log(addBtn);
-console.log(cancelBtn);
-console.log(submitBtn);
+
+const createNewProject = (projectName) => {
+    const project = new Project(projectName);
+    projectList.push(project);
+}
 
 addBtn.addEventListener("click", () => {
-    // modal.showModal();
     DOMhander.taskModal.showModal();
 })
 
@@ -40,4 +44,19 @@ submitBtn.addEventListener("click", (event) => {
 
 addProjectBtn.addEventListener("click", () => {
     DOMhander.projectForm.classList.remove('none');
+})
+
+checkBtn.addEventListener("click", (event)=> {
+    console.log("CHECK TEST");
+    event.preventDefault();
+    DOMhander.projectForm.classList.add('none');
+    createNewProject(DOMhander.projectName.value);
+    DOMhander.renderNewProject(DOMhander.projectName.value)
+    console.log(projectList);
+    document.addProjectForm.reset();
+})
+
+cancelProjectBtn.addEventListener("click", () => {
+    DOMhander.projectForm.classList.add('none');
+    document.addProjectForm.reset();
 })
