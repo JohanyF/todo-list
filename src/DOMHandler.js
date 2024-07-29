@@ -15,9 +15,10 @@ export default class DOMHandler {
     submitBtn = document.querySelector(".submit-btn")
     addProjectBtn = document.querySelector("#project-add");
     projectForm = document.querySelector(".none");
+    projectName = document.querySelector("#add-project");
 
-    checkBtn = document.querySelector(".check");
-    cancelProjectBtn = document.querySelector(".cancel");
+    checkBtn = document.querySelector(".submit-project-btn");
+    cancelProjectBtn = document.querySelector(".cancel-project-btn");
 
     taskTitle = document.querySelector("#task");
     description = document.querySelector("#description");
@@ -74,6 +75,10 @@ export default class DOMHandler {
     }
     get projects() {
         return this._projects;
+    }
+
+    get projectName() {
+        return this._projectName;
     }
 
 
@@ -207,6 +212,23 @@ export default class DOMHandler {
         tasksContainer.appendChild(task);
 
         // TODO: Add class based on the priority value - Low, Medium, High
+
+    }
+
+    renderNewProject(projName) {
+        const projectListElem = document.querySelector(".projects-list")
+
+        const projectsName = document.createElement('li');
+        projectsName.textContent = projName;
+        projectsName.classList.add("project-section")
+
+        const HamburgerIcon = new Image();
+        HamburgerIcon.src = HamburgerMenuIcon;
+        HamburgerIcon.classList.add("icons-24");
+
+        projectsName.prepend(HamburgerIcon);
+
+        projectListElem.appendChild(projectsName);
 
     }
 
