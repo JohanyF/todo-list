@@ -73,21 +73,30 @@ input {
     background-color: #F5F3F5;
 }
 
-.task-filter {
+.task-filter,
+.projects-list {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
 }
 
-.section {
+.section,
+.project-section {
     color: #000;
-    font-size: 1.5rem;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
     display: flex;
     align-items: center;
     gap: 8px;
+}
+
+.section {
+    font-size: 1.5rem;
+}
+
+.project-section {
+    font-size: 1.2rem;
 }
 
 .icons {
@@ -109,7 +118,7 @@ input {
     padding-bottom: 8px;
 }
 
-#add-project-container {
+#addProjectForm {
     margin-top: 8px;
     display: flex;
     justify-content: space-between;
