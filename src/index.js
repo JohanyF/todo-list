@@ -51,9 +51,11 @@ checkBtn.addEventListener("click", (event)=> {
     event.preventDefault();
     DOMhander.projectForm.classList.add('none');
     createNewProject(DOMhander.projectName.value);
-    DOMhander.renderNewProject(DOMhander.projectName.value)
+    DOMhander.renderNewProject(DOMhander.projectName.value, projectList.length-1, projectList)
+    console.log(`Legth of project list: ${projectList.length-1}`);
     console.log(projectList);
     document.addProjectForm.reset();
+    // DOMhander.renderTasks();
 })
 
 cancelProjectBtn.addEventListener("click", () => {
