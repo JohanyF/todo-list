@@ -144,9 +144,8 @@ export default class DOMHandler {
 
         const task = document.createElement("div")
         task.classList.add("task");
-        task.setAttribute('id', index);
-
-        console.log(index);
+        // task.setAttribute('id', index);
+        task.setAttribute('data-task', index);
 
         const checkboxContainer = document.createElement("div");
         checkboxContainer.classList.add("checkbox");
@@ -215,21 +214,40 @@ export default class DOMHandler {
 
     }
 
-    renderNewProject(projName) {
+    renderNewProject(projName, indexOfProject, projects) {
         const projectListElem = document.querySelector(".projects-list")
 
-        const projectsName = document.createElement('li');
-        projectsName.textContent = projName;
-        projectsName.classList.add("project-section")
+        const projectSection = document.createElement('li');
+        projectSection.textContent = projName;
+        projectSection.classList.add("project-section")
+        projectSection.setAttribute("data-project", indexOfProject);
+
+        projectSection.addEventListener("click", () => {
+            console.log(projects[indexOfProject]);
+            console.log(projectSection);
+            // call renderExistingTasksFromProject();
+        })
 
         const HamburgerIcon = new Image();
         HamburgerIcon.src = HamburgerMenuIcon;
         HamburgerIcon.classList.add("icons-24");
 
-        projectsName.prepend(HamburgerIcon);
+        projectSection.prepend(HamburgerIcon);
 
-        projectListElem.appendChild(projectsName);
+        projectListElem.appendChild(projectSection);
 
+    }
+
+    // Method will render any of the exisiting tasks within a project
+    renderExistingTasksFromProject() {
+        // const projectSection = document.querySelectorAll('.project-section');
+        // projectSection.forEach((section) => {
+        //     section.addEventListener("click", () => {
+        //         console.log(section);
+        //         console.log("rendering tasks.... if there is any....");
+
+        //     })
+        // })
     }
 
 }
