@@ -239,7 +239,6 @@ export default class DOMHandler {
         const everyProjectSection = document.querySelectorAll(".project-section");
         console.log(everyProjectSection);
 
-        // let unselectSection;
 
         if(everyProjectSection.length === 1) {
             projectSection.classList.add("selected");
@@ -295,6 +294,25 @@ export default class DOMHandler {
         })
         unselectProj.classList.remove('selected');
         selectedProj.classList.add('selected');
+    }
+
+    // Method will render new select options for the select element based on how many projects have been created. 
+    renderSelectOptions(projectListArr) {
+        const select = document.querySelector("#projects");
+        
+        // while loop delete any select options that have been previously rendered.
+        while(select.firstChild) {
+            select.removeChild(select.firstChild);
+        }
+
+        projectListArr.forEach((project) => {
+            // console.log(project.name);
+            const option = document.createElement('option');
+            option.textContent = project.name;
+            option.value = project.name.toLowerCase();
+
+            select.appendChild(option);
+        })
     }
 
 }
