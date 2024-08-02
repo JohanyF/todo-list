@@ -100,6 +100,10 @@ input {
     font-size: 1.2rem;
 }
 
+.selected {
+    background-color: #d4d4d4;
+}
+
 .icons {
     height: 27px;
     width: 27px;
@@ -190,7 +194,7 @@ input {
     margin-bottom: 16px;
 }
 
-.todayText {
+.projectTitleText {
     font-size: 3rem;
 }
 
