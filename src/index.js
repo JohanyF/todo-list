@@ -3,19 +3,27 @@ import './style.css';
 import Project from './project.js';
 import DOMHandler from './DOMHandler.js';
 
-let DOMhander = new DOMHandler();
+let DOMhandler = new DOMHandler();
 
-DOMhander.loadSVGs();
+DOMhandler.loadSVGs();
 let projectList = [];
 let inboxTest = new Project("Inbox");
 projectList.push(inboxTest);
 
-const addBtn = DOMhander.addBtn;
-const addProjectBtn = DOMhander.addProjectBtn;
-const cancelBtn = DOMhander.cancelBtn;
-const submitBtn = DOMhander.submitBtn;
-const checkBtn = DOMhander.checkBtn;
-const cancelProjectBtn = DOMhander.cancelProjectBtn;
+// PROJECTS ARE USED FOR TESTING PURPOSES 
+// let project1 = new Project("project1");
+// projectList.push(project1);
+// let project2 = new Project("project2");
+// projectList.push(project2);
+// let project3 = new Project("project3");
+// projectList.push(project3);
+
+const addBtn = DOMhandler.addBtn;
+const addProjectBtn = DOMhandler.addProjectBtn;
+const cancelBtn = DOMhandler.cancelBtn;
+const submitBtn = DOMhandler.submitBtn;
+const checkBtn = DOMhandler.checkBtn;
+const cancelProjectBtn = DOMhandler.cancelProjectBtn;
 
 
 const createNewProject = (projectName) => {
@@ -24,41 +32,62 @@ const createNewProject = (projectName) => {
 }
 
 addBtn.addEventListener("click", () => {
-    DOMhander.taskModal.showModal();
+    DOMhandler.taskModal.showModal();
+    DOMhandler.renderSelectOptions(projectList);
 })
 
 cancelBtn.addEventListener("click", (event) => {
     event.preventDefault();
-    DOMhander.taskModal.close();
+    DOMhandler.taskModal.close();
     document.taskForm.reset();
 })
 
 submitBtn.addEventListener("click", (event) => {
     event.preventDefault();
-    inboxTest.addTask(DOMhander.taskTitle.value, DOMhander.description.value, DOMhander.date.value, DOMhander.priority.value, DOMhander.projects.value);
+
+
+    // Make this a function that return the index of the project we are adding a task to!
+    let currentProjectIndex = 0;
+    projectList.forEach((project, index=0) => {
+        console.log(project.name);
+        if(project.name.toLowerCase() === DOMhandler.projects.value) {
+            console.log("SI");
+            currentProjectIndex = index;
+
+        }
+        index++;
+    })
+    // 
+
+
+    projectList[currentProjectIndex].addTask(DOMhandler.taskTitle.value, DOMhandler.description.value, DOMhandler.date.value, DOMhandler.priority.value, DOMhandler.projects.value);
+
+    console.log(DOMhandler.projects.value);
     inboxTest.printTasks();
-    DOMhander.renderNewTask(inboxTest.tasks.length-1);
-    DOMhander.taskModal.close();
+    console.log(`Project Title Text: ${DOMhandler.projectTitleText.textContent}`);
+    console.log(projectList[currentProjectIndex].name);
+    if(DOMhandler.projectTitleText.textContent === projectList[currentProjectIndex].name) {
+        DOMhandler.renderNewTask(projectList[currentProjectIndex].tasks.length-1);
+    }
+    console.log(projectList);
+    DOMhandler.taskModal.close();
     document.taskForm.reset();
 })
 
 addProjectBtn.addEventListener("click", () => {
-    DOMhander.projectForm.classList.remove('none');
+    DOMhandler.projectForm.classList.remove('none');
 })
 
 checkBtn.addEventListener("click", (event)=> {
     console.log("CHECK TEST");
     event.preventDefault();
-    DOMhander.projectForm.classList.add('none');
-    createNewProject(DOMhander.projectName.value);
-    DOMhander.renderNewProject(DOMhander.projectName.value, projectList.length-1, projectList)
-    console.log(`Legth of project list: ${projectList.length-1}`);
-    console.log(projectList);
+    DOMhandler.projectForm.classList.add('none');
+    createNewProject(DOMhandler.projectName.value);
+    DOMhandler.renderNewProject(DOMhandler.projectName.value, projectList)
     document.addProjectForm.reset();
-    // DOMhander.renderTasks();
 })
 
 cancelProjectBtn.addEventListener("click", () => {
-    DOMhander.projectForm.classList.add('none');
+    DOMhandler.projectForm.classList.add('none');
     document.addProjectForm.reset();
 })
