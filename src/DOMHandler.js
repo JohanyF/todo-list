@@ -30,6 +30,8 @@ export default class DOMHandler {
     priority = document.querySelector("#priority");
     projects = document.querySelector("#projects");
 
+    projectTitleText = document.querySelector(".projectTitleText");
+
 
     get taskModal() {
         return this._taskModal;
@@ -83,6 +85,10 @@ export default class DOMHandler {
 
     get projectName() {
         return this._projectName;
+    }
+
+    get projectTitleText() {
+        return this._projextTitleText
     }
 
 
@@ -218,7 +224,7 @@ export default class DOMHandler {
 
     }
 
-    renderNewProject(projName, indexOfProject, projects) {
+    renderNewProject(projName, projects) {
         const projectTitleText = document.querySelector(".projectTitleText");
         projectTitleText.textContent= projName;
         const projectListElem = document.querySelector(".projects-list")
@@ -226,7 +232,7 @@ export default class DOMHandler {
         const projectSection = document.createElement('li');
         projectSection.textContent = projName;
         projectSection.classList.add("project-section");
-        projectSection.setAttribute("data-project", indexOfProject);
+        projectSection.setAttribute("data-project", projects.length-1);
         
         const HamburgerIcon = new Image();
         HamburgerIcon.src = HamburgerMenuIcon;
@@ -245,44 +251,57 @@ export default class DOMHandler {
         } else {
             this.switchSelectedProject(projectSection, everyProjectSection);
         }
+
+        const tasksContaier = document.querySelector(".tasks-container");
+        this.removeChildrenElementsFromParentElem(tasksContaier);
         
         
         projectSection.addEventListener("click", (event) => {
 
             const everyProjectSection = document.querySelectorAll(".project-section");
             this.switchSelectedProject(event.target, everyProjectSection);
+            this.removeChildrenElementsFromParentElem(tasksContaier);
 
-            // const everyProjectSection = document.querySelectorAll(".project-section");
-            // console.log(everyProjectSection);
-            // console.log(projects[indexOfProject]);
-            // console.log(projectSection);
+            this.renderExistingProject(projName);
 
-            // Will need to add an if statement to check if the container 
-            // this.removeTasksContainer();
+            console.log(event.target);
 
+            let currentProjectIndex = 0;
+            projects.forEach((project, index=0) => {
+                console.log(project.name);
+                if(project.name === event.target.textContent) {
+                    console.log("SI");
+                    currentProjectIndex = index;
 
-            // this.renderExistingProject();
-            // call renderExistingTasksFromProject();
+                }
+                index++;
+            })
+            this.renderExistingTasksFromProject(projects[currentProjectIndex]);
         })
     }
 
-
-    renderExistingProject() {
-        console.log("renderExistingProject() called");
+    renderExistingTasksFromProject(selectedProj) {
+        console.log("renderExistingTasksFromProject has been called!");
+        console.log(selectedProj.tasks);
     }
 
-    removeTasksContainer() {
-        const tasksContaier = document.querySelector(".tasks-container");
-        tasksContaier.remove();
-
-
-        const cotent = document.querySelector(".content");
-
-        const container = document.createElement("div");
-        container.classList.add("tasks-container");
-
-        cotent.appendChild(container);
+    renderExistingProject(projName) {
+        const projectTitleText = document.querySelector(".projectTitleText");
+        projectTitleText.textContent= projName;
     }
+
+    // removeTasksContainer() {
+    //     const tasksContaier = document.querySelector(".tasks-container");
+    //     tasksContaier.remove();
+
+
+    //     const cotent = document.querySelector(".content");
+
+    //     const container = document.createElement("div");
+    //     container.classList.add("tasks-container");
+
+    //     cotent.appendChild(container);
+    // }
 
     switchSelectedProject(selectedProj, everyProjectSection) {
         let unselectProj;
@@ -300,19 +319,21 @@ export default class DOMHandler {
     renderSelectOptions(projectListArr) {
         const select = document.querySelector("#projects");
         
-        // while loop delete any select options that have been previously rendered.
-        while(select.firstChild) {
-            select.removeChild(select.firstChild);
-        }
+        this.removeChildrenElementsFromParentElem(select);
 
         projectListArr.forEach((project) => {
-            // console.log(project.name);
             const option = document.createElement('option');
             option.textContent = project.name;
             option.value = project.name.toLowerCase();
 
             select.appendChild(option);
         })
+    }
+
+    removeChildrenElementsFromParentElem(parent) {
+        while(parent.firstChild) {
+            parent.removeChild(parent.firstChild);
+        }
     }
 
 }
