@@ -17,9 +17,7 @@ export default class DOMHandler {
     projectForm = document.querySelector(".none");
     projectName = document.querySelector("#add-project");
 
-    inboxSection = document.querySelector("#inbox");
-    todaySection = document.querySelector("#today");
-    upcomingSection = document.querySelector("#upcoming");
+    // inboxSection = document.querySelector("#inbox");
 
     checkBtn = document.querySelector(".submit-project-btn");
     cancelProjectBtn = document.querySelector(".cancel-project-btn");
@@ -149,7 +147,10 @@ export default class DOMHandler {
         addProjectBtn.prepend(addIcon);
     }
 
-    renderNewTask(index) {
+    renderNewTask(t, index) {
+        // console.log(`t[index].title: ${t[index].title}`);
+        console.log(`t[index]: ${t[index]}`);
+
         const tasksContainer = document.querySelector(".tasks-container");
 
         const task = document.createElement("div")
@@ -174,11 +175,13 @@ export default class DOMHandler {
 
         const taskTitle = document.createElement('p');
         taskTitle.classList.add('title');
-        taskTitle.textContent = this.taskTitle.value;
+        // taskTitle.textContent = this.taskTitle.value;
+        taskTitle.textContent = t[index].title;
 
         const taskDescription = document.createElement('p');
         taskDescription.classList.add('description');
-        taskDescription.textContent = this.description.value;
+        // taskDescription.textContent = this.description.value;
+        taskDescription.textContent = t[index].description;
 
         taskInfo.appendChild(taskTitle);
         taskInfo.appendChild(taskDescription);
@@ -189,7 +192,8 @@ export default class DOMHandler {
         taskDateContainer.classList.add('task-date');
 
         const taskDate = document.createElement('p');
-        taskDate.textContent = this.date.value;
+        // taskDate.textContent = this.date.value;
+        taskDate.textContent = t[index].date;
 
         taskDateContainer.appendChild(taskDate);
 
@@ -243,7 +247,7 @@ export default class DOMHandler {
         projectListElem.appendChild(projectSection);
         
         const everyProjectSection = document.querySelectorAll(".project-section");
-        console.log(everyProjectSection);
+        // console.log(everyProjectSection);
 
 
         if(everyProjectSection.length === 1) {
@@ -268,21 +272,22 @@ export default class DOMHandler {
 
             let currentProjectIndex = 0;
             projects.forEach((project, index=0) => {
-                console.log(project.name);
+                // console.log(project.name);
                 if(project.name === event.target.textContent) {
-                    console.log("SI");
                     currentProjectIndex = index;
 
                 }
                 index++;
             })
-            this.renderExistingTasksFromProject(projects[currentProjectIndex]);
+
+            this.renderExistingTasksFromProject(projects[currentProjectIndex].tasks);
         })
     }
 
-    renderExistingTasksFromProject(selectedProj) {
-        console.log("renderExistingTasksFromProject has been called!");
-        console.log(selectedProj.tasks);
+    renderExistingTasksFromProject(selectedProjectTasks) {
+        for(let i = 0; i < selectedProjectTasks.length; i++) {
+            this.renderNewTask(selectedProjectTasks, i);
+        }
     }
 
     renderExistingProject(projName) {
@@ -290,22 +295,9 @@ export default class DOMHandler {
         projectTitleText.textContent= projName;
     }
 
-    // removeTasksContainer() {
-    //     const tasksContaier = document.querySelector(".tasks-container");
-    //     tasksContaier.remove();
-
-
-    //     const cotent = document.querySelector(".content");
-
-    //     const container = document.createElement("div");
-    //     container.classList.add("tasks-container");
-
-    //     cotent.appendChild(container);
-    // }
-
     switchSelectedProject(selectedProj, everyProjectSection) {
         let unselectProj;
-        console.log(everyProjectSection);
+        // console.log(everyProjectSection);
         everyProjectSection.forEach((project) => {
             if(project.classList.contains('selected')) {
                 unselectProj = project;
@@ -334,6 +326,27 @@ export default class DOMHandler {
         while(parent.firstChild) {
             parent.removeChild(parent.firstChild);
         }
+    }
+
+    addEventListenersToInbox() {
+        const inboxSection = document.querySelector("#inbox");
+        inboxSection.addEventListener("click", () => {
+            console.log("INBOX CLICKED");
+        })
+    }
+
+    addEventListenersToToday() {
+        const todaySection = document.querySelector("#today");
+        todaySection.addEventListener("click", () => {
+            console.log("TODAY CLICKED");
+        })
+    }
+
+    addEventListenersToUpcoming() {
+        const upcomingSection = document.querySelector("#upcoming");
+        upcomingSection.addEventListener("click", () => {
+            console.log("UPCOMING CLICKED");
+        })
     }
 
 }
