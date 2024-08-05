@@ -10,6 +10,10 @@ let projectList = [];
 let inboxTest = new Project("Inbox");
 projectList.push(inboxTest);
 
+DOMhandler.addEventListenersToInbox();
+DOMhandler.addEventListenersToToday();
+DOMhandler.addEventListenersToUpcoming();
+
 // PROJECTS ARE USED FOR TESTING PURPOSES 
 // let project1 = new Project("project1");
 // projectList.push(project1);
@@ -49,9 +53,8 @@ submitBtn.addEventListener("click", (event) => {
     // Make this a function that return the index of the project we are adding a task to!
     let currentProjectIndex = 0;
     projectList.forEach((project, index=0) => {
-        console.log(project.name);
+        // console.log(project.name);
         if(project.name.toLowerCase() === DOMhandler.projects.value) {
-            console.log("SI");
             currentProjectIndex = index;
 
         }
@@ -62,14 +65,13 @@ submitBtn.addEventListener("click", (event) => {
 
     projectList[currentProjectIndex].addTask(DOMhandler.taskTitle.value, DOMhandler.description.value, DOMhandler.date.value, DOMhandler.priority.value, DOMhandler.projects.value);
 
-    console.log(DOMhandler.projects.value);
-    inboxTest.printTasks();
-    console.log(`Project Title Text: ${DOMhandler.projectTitleText.textContent}`);
-    console.log(projectList[currentProjectIndex].name);
+    // console.log(`Project Title Text: ${DOMhandler.projectTitleText.textContent}`);
+    // console.log(projectList[currentProjectIndex].name);
     if(DOMhandler.projectTitleText.textContent === projectList[currentProjectIndex].name) {
-        DOMhandler.renderNewTask(projectList[currentProjectIndex].tasks.length-1);
+        console.log(projectList[currentProjectIndex].tasks);
+        DOMhandler.renderNewTask(projectList[currentProjectIndex].tasks, projectList[currentProjectIndex].tasks.length-1);
     }
-    console.log(projectList);
+    // console.log(projectList);
     DOMhandler.taskModal.close();
     document.taskForm.reset();
 })
@@ -79,7 +81,6 @@ addProjectBtn.addEventListener("click", () => {
 })
 
 checkBtn.addEventListener("click", (event)=> {
-    console.log("CHECK TEST");
     event.preventDefault();
     DOMhandler.projectForm.classList.add('none');
     createNewProject(DOMhandler.projectName.value);
