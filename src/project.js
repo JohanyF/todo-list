@@ -18,9 +18,8 @@ export default class Project {
 
     addTask(title, description, date, priority, project) {
         let task = new Task(title, description, date, priority, project);
-        console.log(task);
         this.#tasks.push(task);
-        console.log(this.#tasks);
+        // console.log(this.#tasks);
     }
 
     printTasks() {
