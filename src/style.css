@@ -27,7 +27,8 @@ input {
     padding: 0.25rem;
 }
 
-#taskForm {
+#taskForm,
+#editTaskForm {
     padding: 1.6rem;
     display: flex;
     flex-direction: column;
@@ -297,7 +298,9 @@ input[type="checkbox"] {
 }
 
 .submit-btn,
-.cancel-btn {
+.cancel-btn,
+.save-btn,
+.edit-cancel-btn {
     border: none;
     font-weight: bold;
     padding: 1rem;
@@ -306,4 +309,16 @@ input[type="checkbox"] {
     flex: 1;
     background-color: #274690;
     color: white;
+}
+
+.low {
+    border-left: 4px solid #00d300;
+}
+
+.medium {
+    border-left: 4px solid #ffa500;
+}
+
+.high {
+    border-left: 4px solid #ff3535;
 }
