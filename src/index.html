@@ -78,6 +78,37 @@
 
             </form>
         </dialog>
+
+        <dialog id="edit-task-modal">
+            <form method="dialog" name="editTaskForm" id="editTaskForm">
+                <div class="input-container">
+                    <label for="edit-task">Task: </label>
+                    <input type="text" name="edit-task" id="edit-task" placeholder="Edit the task title?" required>
+                </div>
+                <div class="input-container">
+                    <label for="edit-description">Task Description: </label>
+                    <textarea type="text" name="edit-description" id="edit-description" placeholder="Edit Task Description..." rows="5" cols="33" wrap="hard" required></textarea>
+                </div>
+                <div class="input-container">
+                    <label for="edit-date">Date: </label>
+                    <input type="date" name="edit-date" id="edit-date" required>
+                </div>
+                <div class="dropdown-container">
+                    <label for="edit-priority">Priority: </label>
+                    <select name="edit-priority" id="edit-priority">
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                </div>
+
+                <div class="modal-btns">
+                    <button type="button" class="edit-cancel-btn" value="cancel" formmethod="dialog">Cancel</button>
+                    <button type="submit" class="save-btn" value="default">Save</button>
+                </div>
+
+            </form>
+        </dialog>
         
     </div>
 </body>
