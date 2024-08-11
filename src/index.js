@@ -49,7 +49,6 @@ cancelBtn.addEventListener("click", (event) => {
 submitBtn.addEventListener("click", (event) => {
     event.preventDefault();
 
-
     // Make this a function that return the index of the project we are adding a task to!
     let currentProjectIndex = 0;
     projectList.forEach((project, index=0) => {
@@ -65,8 +64,6 @@ submitBtn.addEventListener("click", (event) => {
 
     projectList[currentProjectIndex].addTask(DOMhandler.taskTitle.value, DOMhandler.description.value, DOMhandler.date.value, DOMhandler.priority.value, DOMhandler.projects.value);
 
-    // console.log(`Project Title Text: ${DOMhandler.projectTitleText.textContent}`);
-    // console.log(projectList[currentProjectIndex].name);
     if(DOMhandler.projectTitleText.textContent === projectList[currentProjectIndex].name) {
         console.log(projectList[currentProjectIndex].tasks);
         DOMhandler.renderNewTask(projectList[currentProjectIndex].tasks, projectList[currentProjectIndex].tasks.length-1);
