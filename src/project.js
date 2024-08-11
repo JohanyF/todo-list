@@ -27,18 +27,4 @@ export default class Project {
             console.log(`${task.title} | ${task.description} | ${task.date} | ${task.priority} | ${task.project}`);
         })
     }
-
-
-    // edit() {
-
-    // }
-
-    // delete() {
-
-    // }
-
-
-
-    // I think project class will include what the functionality of the Inbox, Today, and Upcoming tabs will do... Might have to make it its own file where you import this class???
-    // Note: This will not involve any code that makes changes to the DOM that will be in another file that should do that
 }
