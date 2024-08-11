@@ -86,7 +86,7 @@ export default class DOMHandler {
     }
 
     get projectTitleText() {
-        return this._projextTitleText
+        return this._projextTitleText;
     }
 
 
@@ -148,9 +148,6 @@ export default class DOMHandler {
     }
 
     renderNewTask(t, index) {
-        // console.log(`t[index].title: ${t[index].title}`);
-        console.log(`t[index]: ${t[index]}`);
-
         const tasksContainer = document.querySelector(".tasks-container");
 
         const task = document.createElement("div")
@@ -192,6 +189,7 @@ export default class DOMHandler {
         taskDateContainer.classList.add('task-date');
 
         const taskDate = document.createElement('p');
+        taskDate.classList.add("date");
         // taskDate.textContent = this.date.value;
         taskDate.textContent = t[index].date;
 
@@ -210,6 +208,12 @@ export default class DOMHandler {
 
         edit.appendChild(editIcon);
 
+        edit.addEventListener("click", () => {
+            this.editTaskInfo(t[index], task);
+
+        })
+
+
         const deleteDiv = document.createElement('div');
 
         const deleteIcon = new Image();
@@ -225,6 +229,14 @@ export default class DOMHandler {
         tasksContainer.appendChild(task);
 
         // TODO: Add class based on the priority value - Low, Medium, High
+        // console.log(t[index].priority);
+        if(t[index].priority === 'low') {
+            task.classList.add("low");
+        } else if(t[index].priority === 'medium') {
+            task.classList.add("medium");
+        } else if(t[index].priority === 'high') {
+            task.classList.add("high");
+        }
 
     }
 
@@ -268,7 +280,7 @@ export default class DOMHandler {
 
             this.renderExistingProject(projName);
 
-            console.log(event.target);
+            // console.log(event.target);
 
             let currentProjectIndex = 0;
             projects.forEach((project, index=0) => {
@@ -347,6 +359,75 @@ export default class DOMHandler {
         upcomingSection.addEventListener("click", () => {
             console.log("UPCOMING CLICKED");
         })
+    }
+
+    editTaskInfo(taskInfo, selectedTask) {
+        console.log("editTaskInfo() has been called...");
+        // this.taskModal.showModal();
+        const editTaskForm = document.querySelector("#edit-task-modal")
+
+        editTaskForm.showModal();
+
+        // console.log(taskInfo.title);
+        const inputTask = document.querySelector("#edit-task");
+        const inputDescription = document.querySelector("#edit-description");
+        const inputDate = document.querySelector("#edit-date");
+        const inputPriority = document.querySelector("#edit-priority");
+
+        console.log(inputTask);
+
+
+        inputTask.value = taskInfo.title
+        inputDescription.value = taskInfo.description
+        inputDate.value = taskInfo.date
+        inputPriority.value = taskInfo.priority
+
+        const saveBtn = document.querySelector(".save-btn");
+        // cloning the button allows the new node to not have any event listeners that were orinally attached to the button. 
+        // This is used to "reset" the element and not let any old event listeners from causing unexpected behavior like multiple clicks
+        const newSaveBtn = saveBtn.cloneNode(true);
+        saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn);
+
+        const editCancelBtn = document.querySelector(".edit-cancel-btn");
+        const newEditCancelBtn = editCancelBtn.cloneNode(true);
+        editCancelBtn.parentNode.replaceChild(newEditCancelBtn, editCancelBtn);
+
+
+        newSaveBtn.addEventListener("click", (event) => {
+            event.preventDefault();
+
+            // task.classList.remove(taskInfo.priority);
+            taskInfo.title = inputTask.value
+            taskInfo.description = inputDescription.value
+            taskInfo.date = inputDate.value
+            taskInfo.priority = inputPriority.value
+
+            this.updateTextContentFromTask(taskInfo, selectedTask);
+            editTaskForm.close();
+        })
+
+        newEditCancelBtn.addEventListener("click", (event) => {
+            event.preventDefault();
+            editTaskForm.close();
+        })
+    }
+
+    updateTextContentFromTask(taskInfo, selectedTask) {
+
+        selectedTask.classList.remove(selectedTask.classList[1]);
+        
+        selectedTask.children[1].children[0].textContent = taskInfo.title;
+        selectedTask.children[1].children[1].textContent = taskInfo.description;
+        selectedTask.children[2].children[0].textContent = taskInfo.date;
+
+
+        if(taskInfo.priority === 'low') {
+            selectedTask.classList.add("low");
+        } else if(taskInfo.priority === 'medium') {
+            selectedTask.classList.add("medium");
+        } else if(taskInfo.priority === 'high') {
+            selectedTask.classList.add("high");
+        }
     }
 
 }
