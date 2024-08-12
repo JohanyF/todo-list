@@ -10,7 +10,7 @@ let projectList = [];
 let inboxTest = new Project("Inbox");
 projectList.push(inboxTest);
 
-DOMhandler.addEventListenersToInbox();
+DOMhandler.addEventListenersToInbox(projectList);
 DOMhandler.addEventListenersToToday();
 DOMhandler.addEventListenersToUpcoming();
 
