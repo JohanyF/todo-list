@@ -68,7 +68,7 @@ submitBtn.addEventListener("click", (event) => {
         console.log(projectList[currentProjectIndex].tasks);
         DOMhandler.renderNewTask(projectList[currentProjectIndex].tasks, projectList[currentProjectIndex].tasks.length-1);
     }
-    // console.log(projectList);
+    console.log(projectList);
     DOMhandler.taskModal.close();
     document.taskForm.reset();
 })
