@@ -221,6 +221,18 @@ export default class DOMHandler {
 
         deleteDiv.appendChild(deleteIcon);
 
+        deleteDiv.addEventListener("click", () => {
+            console.log("delete clicked!");
+            console.log(t);
+            // console.log(index);
+            t.splice(index, 1);
+            // console.log(t);
+            this.removeTask(task)
+            this.updateDataTask(t);
+
+        })
+
+
         taskIcons.appendChild(edit);
         taskIcons.appendChild(deleteDiv);
 
@@ -396,7 +408,7 @@ export default class DOMHandler {
         newSaveBtn.addEventListener("click", (event) => {
             event.preventDefault();
 
-            // task.classList.remove(taskInfo.priority);
+            // updates the title, description, date, and priority of the given task 
             taskInfo.title = inputTask.value
             taskInfo.description = inputDescription.value
             taskInfo.date = inputDate.value
@@ -411,6 +423,7 @@ export default class DOMHandler {
             editTaskForm.close();
         })
     }
+
 
     updateTextContentFromTask(taskInfo, selectedTask) {
 
@@ -427,6 +440,18 @@ export default class DOMHandler {
             selectedTask.classList.add("medium");
         } else if(taskInfo.priority === 'high') {
             selectedTask.classList.add("high");
+        }
+    }
+
+    removeTask(selectedTask) {
+        console.log(selectedTask);
+        selectedTask.remove();
+    }
+
+    updateDataTask(taskList) {
+        const task = document.querySelectorAll(".task")
+        for(let i = 0; i <  taskList.length; i++) {
+            task[i].setAttribute('data-task', i);
         }
     }
 
