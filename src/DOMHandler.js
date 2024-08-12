@@ -275,9 +275,12 @@ export default class DOMHandler {
 
 
         if(everyProjectSection.length === 1) {
+            // this.switchSelectedProject(projectSection, everyProjectSection);
+            this.switchSelectedProject(projectSection);
             projectSection.classList.add("selected");
         } else {
-            this.switchSelectedProject(projectSection, everyProjectSection);
+            // this.switchSelectedProject(projectSection, everyProjectSection);
+            this.switchSelectedProject(projectSection);
         }
 
         const tasksContaier = document.querySelector(".tasks-container");
@@ -287,7 +290,8 @@ export default class DOMHandler {
         projectSection.addEventListener("click", (event) => {
 
             const everyProjectSection = document.querySelectorAll(".project-section");
-            this.switchSelectedProject(event.target, everyProjectSection);
+            // this.switchSelectedProject(event.target, everyProjectSection);
+            this.switchSelectedProject(event.target);
             this.removeChildrenElementsFromParentElem(tasksContaier);
 
             this.renderExistingProject(projName);
@@ -319,14 +323,29 @@ export default class DOMHandler {
         projectTitleText.textContent= projName;
     }
 
-    switchSelectedProject(selectedProj, everyProjectSection) {
+    switchSelectedProject(selectedProj) {
         let unselectProj;
+
+        const everyProjectSection = document.querySelectorAll(".project-section");
+        const taskFilter = document.querySelectorAll(".section");
+        console.log(everyProjectSection);
+        taskFilter.forEach((section) => {
+            if(section.classList.contains('selected')) {
+                unselectProj = section;
+            }
+        })
+
         // console.log(everyProjectSection);
         everyProjectSection.forEach((project) => {
             if(project.classList.contains('selected')) {
                 unselectProj = project;
             }
         })
+        console.log("unselectedProject: ")
+        console.log(unselectProj);
+        if(unselectProj === null) {
+            return;
+        }
         unselectProj.classList.remove('selected');
         selectedProj.classList.add('selected');
     }
@@ -352,24 +371,50 @@ export default class DOMHandler {
         }
     }
 
-    addEventListenersToInbox() {
+    // TODO: complete the following three methods...
+    addEventListenersToInbox(projectList) {
         const inboxSection = document.querySelector("#inbox");
-        inboxSection.addEventListener("click", () => {
-            console.log("INBOX CLICKED");
+        inboxSection.addEventListener("click", (event) => {
+            const tasksContaier = document.querySelector(".tasks-container");
+
+            this.switchSelectedProject(event.target);
+
+            this.removeChildrenElementsFromParentElem(tasksContaier);
+
+            this.renderExistingProject("Inbox");
+
+            this.renderExistingTasksFromProject(projectList[0].tasks);
+            
         })
     }
 
     addEventListenersToToday() {
         const todaySection = document.querySelector("#today");
-        todaySection.addEventListener("click", () => {
-            console.log("TODAY CLICKED");
+        todaySection.addEventListener("click", (event) => {
+            const tasksContaier = document.querySelector(".tasks-container");
+
+            this.switchSelectedProject(event.target);
+
+            this.removeChildrenElementsFromParentElem(tasksContaier);
+
+            this.renderExistingProject("Today");
+
+            // TODO: Render all of the task(s) that have today's date from all of the projects created...
         })
     }
 
     addEventListenersToUpcoming() {
         const upcomingSection = document.querySelector("#upcoming");
-        upcomingSection.addEventListener("click", () => {
-            console.log("UPCOMING CLICKED");
+        upcomingSection.addEventListener("click", (event) => {
+            const tasksContaier = document.querySelector(".tasks-container");
+
+            this.switchSelectedProject(event.target);
+
+            this.removeChildrenElementsFromParentElem(tasksContaier);
+
+            this.renderExistingProject("Upcoming");
+            
+            // TODO: Render all of the task(s) that are coming up...
         })
     }
 
@@ -423,7 +468,6 @@ export default class DOMHandler {
             editTaskForm.close();
         })
     }
-
 
     updateTextContentFromTask(taskInfo, selectedTask) {
 
