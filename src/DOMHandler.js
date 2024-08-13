@@ -222,11 +222,7 @@ export default class DOMHandler {
         deleteDiv.appendChild(deleteIcon);
 
         deleteDiv.addEventListener("click", () => {
-            console.log("delete clicked!");
-            console.log(t);
-            // console.log(index);
             t.splice(index, 1);
-            // console.log(t);
             this.removeTask(task)
             this.updateDataTask(t);
 
@@ -240,8 +236,6 @@ export default class DOMHandler {
 
         tasksContainer.appendChild(task);
 
-        // TODO: Add class based on the priority value - Low, Medium, High
-        // console.log(t[index].priority);
         if(t[index].priority === 'low') {
             task.classList.add("low");
         } else if(t[index].priority === 'medium') {
@@ -271,7 +265,6 @@ export default class DOMHandler {
         projectListElem.appendChild(projectSection);
         
         const everyProjectSection = document.querySelectorAll(".project-section");
-        // console.log(everyProjectSection);
 
 
         if(everyProjectSection.length === 1) {
@@ -296,11 +289,9 @@ export default class DOMHandler {
 
             this.renderExistingProject(projName);
 
-            // console.log(event.target);
 
             let currentProjectIndex = 0;
             projects.forEach((project, index=0) => {
-                // console.log(project.name);
                 if(project.name === event.target.textContent) {
                     currentProjectIndex = index;
 
@@ -328,21 +319,18 @@ export default class DOMHandler {
 
         const everyProjectSection = document.querySelectorAll(".project-section");
         const taskFilter = document.querySelectorAll(".section");
-        console.log(everyProjectSection);
         taskFilter.forEach((section) => {
             if(section.classList.contains('selected')) {
                 unselectProj = section;
             }
         })
 
-        // console.log(everyProjectSection);
         everyProjectSection.forEach((project) => {
             if(project.classList.contains('selected')) {
                 unselectProj = project;
             }
         })
-        console.log("unselectedProject: ")
-        console.log(unselectProj);
+        
         if(unselectProj === null) {
             return;
         }
@@ -371,7 +359,6 @@ export default class DOMHandler {
         }
     }
 
-    // TODO: complete the following three methods...
     addEventListenersToInbox(projectList) {
         const inboxSection = document.querySelector("#inbox");
         inboxSection.addEventListener("click", (event) => {
@@ -388,9 +375,10 @@ export default class DOMHandler {
         })
     }
 
-    addEventListenersToToday() {
+    addEventListenersToToday(projectList, todayDate) {
         const todaySection = document.querySelector("#today");
         todaySection.addEventListener("click", (event) => {
+            let todayTasks = [];
             const tasksContaier = document.querySelector(".tasks-container");
 
             this.switchSelectedProject(event.target);
@@ -399,13 +387,23 @@ export default class DOMHandler {
 
             this.renderExistingProject("Today");
 
-            // TODO: Render all of the task(s) that have today's date from all of the projects created...
+            projectList.forEach((project) => {
+                let index = 0;
+                project.tasks.forEach((task) => {
+                    if(task.date === todayDate) {
+                        this.renderNewTask(project.tasks, index);
+                    }
+                    index++;
+                })
+
+            })
         })
     }
 
-    addEventListenersToUpcoming() {
+    addEventListenersToUpcoming(projectList, todayDate) {
         const upcomingSection = document.querySelector("#upcoming");
         upcomingSection.addEventListener("click", (event) => {
+            let upcomingTasks = [];
             const tasksContaier = document.querySelector(".tasks-container");
 
             this.switchSelectedProject(event.target);
@@ -414,25 +412,29 @@ export default class DOMHandler {
 
             this.renderExistingProject("Upcoming");
             
-            // TODO: Render all of the task(s) that are coming up...
+            projectList.forEach((project) => {
+                let index = 0;
+                project.tasks.forEach((task) => {
+                    if(task.date > todayDate) {
+                        this.renderNewTask(project.tasks, index);
+                        upcomingTasks.push(task);
+                    }
+                    index++;
+                })
+
+            })
         })
     }
 
     editTaskInfo(taskInfo, selectedTask) {
-        console.log("editTaskInfo() has been called...");
-        // this.taskModal.showModal();
         const editTaskForm = document.querySelector("#edit-task-modal")
 
         editTaskForm.showModal();
 
-        // console.log(taskInfo.title);
         const inputTask = document.querySelector("#edit-task");
         const inputDescription = document.querySelector("#edit-description");
         const inputDate = document.querySelector("#edit-date");
         const inputPriority = document.querySelector("#edit-priority");
-
-        console.log(inputTask);
-
 
         inputTask.value = taskInfo.title
         inputDescription.value = taskInfo.description
@@ -488,7 +490,6 @@ export default class DOMHandler {
     }
 
     removeTask(selectedTask) {
-        console.log(selectedTask);
         selectedTask.remove();
     }
 
