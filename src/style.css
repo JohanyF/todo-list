@@ -136,6 +136,11 @@ input {
     width: 24px;
 }
 
+.icons,
+.icons-24 {
+    pointer-events: none;
+}
+
 .submit-project-btn,
 .cancel-project-btn {
     border: none;
