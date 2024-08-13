@@ -10,9 +10,15 @@ let projectList = [];
 let inboxTest = new Project("Inbox");
 projectList.push(inboxTest);
 
+// let currentDate = new Date().toJSON().slice(0, 10);
+let todayDate = new Date();
+const timeZoneOffset = todayDate.getTimezoneOffset();
+todayDate = new Date(todayDate.getTime() - (timeZoneOffset*60*1000));
+
 DOMhandler.addEventListenersToInbox(projectList);
-DOMhandler.addEventListenersToToday();
-DOMhandler.addEventListenersToUpcoming();
+// currentDate.toISOString().split('T')[0] gets the date in yyyy-mm-dd format
+DOMhandler.addEventListenersToToday(projectList, todayDate.toISOString().split('T')[0]);
+DOMhandler.addEventListenersToUpcoming(projectList, todayDate.toISOString().split('T')[0]);
 
 // PROJECTS ARE USED FOR TESTING PURPOSES 
 // let project1 = new Project("project1");
@@ -52,7 +58,6 @@ submitBtn.addEventListener("click", (event) => {
     // Make this a function that return the index of the project we are adding a task to!
     let currentProjectIndex = 0;
     projectList.forEach((project, index=0) => {
-        // console.log(project.name);
         if(project.name.toLowerCase() === DOMhandler.projects.value) {
             currentProjectIndex = index;
 
@@ -65,10 +70,8 @@ submitBtn.addEventListener("click", (event) => {
     projectList[currentProjectIndex].addTask(DOMhandler.taskTitle.value, DOMhandler.description.value, DOMhandler.date.value, DOMhandler.priority.value, DOMhandler.projects.value);
 
     if(DOMhandler.projectTitleText.textContent === projectList[currentProjectIndex].name) {
-        console.log(projectList[currentProjectIndex].tasks);
         DOMhandler.renderNewTask(projectList[currentProjectIndex].tasks, projectList[currentProjectIndex].tasks.length-1);
     }
-    console.log(projectList);
     DOMhandler.taskModal.close();
     document.taskForm.reset();
 })
