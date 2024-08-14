@@ -78,7 +78,7 @@ input {
 .projects-list {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.5rem;
 }
 
 .section,
@@ -90,6 +90,7 @@ input {
     display: flex;
     align-items: center;
     gap: 8px;
+    padding: 0.3rem;
     cursor: pointer;
 }
 
@@ -97,12 +98,19 @@ input {
     font-size: 1.5rem;
 }
 
+
 .project-section {
     font-size: 1.2rem;
 }
 
-.selected {
+.section:hover,
+.project-section:hover {
     background-color: #d4d4d4;
+}
+
+.selected {
+    background-color: #d4d4d4bf;
+    border-left: 3px solid #1B264F;
 }
 
 .icons {
@@ -148,6 +156,11 @@ input {
     background-color: transparent;
 }
 
+.submit-project-btn:hover,
+.cancel-project-btn:hover {
+    background-color: #d4d4d4;
+}
+
 .add-project-container {
     margin-top: 8px;
     display: flex;
@@ -178,6 +191,7 @@ input {
     margin: 0.5rem 1rem;
     padding: 1rem;
     gap: 8px;
+    cursor: pointer;
 }
 
 .addIcon {
@@ -215,6 +229,7 @@ input {
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+    cursor: pointer;
 }
 
 .tasks-container {
@@ -326,4 +341,41 @@ input[type="checkbox"] {
 
 .high {
     border-left: 4px solid #ff3535;
+}
+
+
+.tooltip {
+    position: relative;
+    cursor: pointer;
+}
+  
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 60px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    top: 120%;
+    left: 50%;
+    margin-left: -30px;
+    font-weight: 600;
+}
+  
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent black transparent;
+}
+  
+.tooltip:hover .tooltiptext {
+    visibility: visible;
 }
