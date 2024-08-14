@@ -202,11 +202,17 @@ export default class DOMHandler {
 
         const edit = document.createElement('div');
         edit.setAttribute('id', 'edit');
+        edit.classList.add("tooltip");
 
         const editIcon = new Image();
         editIcon.src = Edit;
 
+        const editToolTipText = document.createElement('span');
+        editToolTipText.textContent = "Edit";
+        editToolTipText.classList.add("tooltiptext");
+
         edit.appendChild(editIcon);
+        edit.appendChild(editToolTipText);
 
         edit.addEventListener("click", () => {
             this.editTaskInfo(t[index], task);
@@ -215,11 +221,17 @@ export default class DOMHandler {
 
 
         const deleteDiv = document.createElement('div');
+        deleteDiv.classList.add("tooltip");
 
         const deleteIcon = new Image();
         deleteIcon.src = Delete;
 
+        const deleteToolTipText = document.createElement('span');
+        deleteToolTipText.textContent = "Delete";
+        deleteToolTipText.classList.add("tooltiptext");
+
         deleteDiv.appendChild(deleteIcon);
+        deleteDiv.appendChild(deleteToolTipText);
 
         deleteDiv.addEventListener("click", () => {
             t.splice(index, 1);
