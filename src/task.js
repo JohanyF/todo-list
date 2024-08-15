@@ -1,5 +1,6 @@
 
 export default class Task {
+    #isChecked = false;
     constructor(title, description, date, priority, project) {
         this._title = title;
         this._description = description;
@@ -28,6 +29,10 @@ export default class Task {
         return this._project;
     }
 
+    get isChecked() {
+        return this.#isChecked;
+    }
+
     set title(title) {
         this._title = title;
     }
@@ -43,5 +48,9 @@ export default class Task {
     }
     set project(project) {
         this._project = project;
+    }
+
+    set isChecked(isChecked) {
+        this.#isChecked = isChecked;
     }
 }
