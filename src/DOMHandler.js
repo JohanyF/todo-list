@@ -7,7 +7,6 @@ import Delete from './img/delete-icon.svg';
 import Check from './img/check-icon.svg';
 import Cancel from './img/cancel-icon.svg';
 
-
 export default class DOMHandler {
     taskModal = document.querySelector("#task-modal");
     addBtn = document.querySelector(".add-task");
@@ -163,8 +162,20 @@ export default class DOMHandler {
         checkbox.name = 'task-completed';
         checkbox.id = 'task-completed';
 
-        checkboxContainer.appendChild(checkbox);
+        if(t[index].isChecked === true) {
+            checkbox.checked = true;
+            task.classList.add("faded");
+            task.classList.add("line-through");
+        }
 
+        checkbox.addEventListener("change", () => {
+            task.classList.toggle("faded");
+            task.classList.toggle("line-through");
+            t[index].isChecked = !t[index].isChecked;
+        })
+
+        checkboxContainer.appendChild(checkbox);
+        
         task.appendChild(checkboxContainer);
 
         const taskInfo = document.createElement("div");
@@ -513,3 +524,6 @@ export default class DOMHandler {
     }
 
 }
+
+// TODO: Add padding to the input boxes in the forms. Use the date formatter to format the date to be shown in the task. 
+// Added functionality to the checkbox input.... and that should be it 
