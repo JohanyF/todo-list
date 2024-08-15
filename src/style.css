@@ -23,7 +23,9 @@ dialog {
     border-radius: 16px;
 }
 
-input {
+input,
+textarea,
+select {
     padding: 0.25rem;
 }
 
