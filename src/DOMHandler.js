@@ -523,7 +523,12 @@ export default class DOMHandler {
         }
     }
 
-}
+    addDisplayNone() {
+        const hamburgerIcon = document.querySelector(".hamburgerIcon");
+        const sidebar = document.querySelector(".sidebar");
+        hamburgerIcon.addEventListener("click", () => {
+            sidebar.classList.toggle("none");
+        })
+    }
 
-// TODO: Add padding to the input boxes in the forms. Use the date formatter to format the date to be shown in the task. 
-// Added functionality to the checkbox input.... and that should be it 
+}
