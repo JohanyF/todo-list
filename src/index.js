@@ -15,6 +15,7 @@ let todayDate = new Date();
 const timeZoneOffset = todayDate.getTimezoneOffset();
 todayDate = new Date(todayDate.getTime() - (timeZoneOffset*60*1000));
 
+DOMhandler.addDisplayNone();
 DOMhandler.addEventListenersToInbox(projectList);
 // currentDate.toISOString().split('T')[0] gets the date in yyyy-mm-dd format
 DOMhandler.addEventListenersToToday(projectList, todayDate.toISOString().split('T')[0]);
