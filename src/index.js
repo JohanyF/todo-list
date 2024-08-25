@@ -3,6 +3,7 @@ import './style.css';
 import Project from './project.js';
 import DOMHandler from './DOMHandler.js';
 
+// serializes each project in projectList
 const serializeProjectList = (projectList) => {
     const serializedProjects = projectList.map(project => project.serialize());
     const stringifySerializedProjects = JSON.stringify(serializedProjects);
@@ -61,10 +62,12 @@ submitBtn.addEventListener("click", (event) => {
         index++;
     })
 
+    // Adds a new task to the given project based on the currentProjectIndex value that was calculated
     projectList[currentProjectIndex].addTask(DOMhandler.taskTitle.value, DOMhandler.description.value, DOMhandler.date.value, DOMhandler.priority.value, DOMhandler.projects.value, false);
 
     serializeProjectList(projectList);
 
+    // Renders the new task if the current Project is being displayed
     if(DOMhandler.projectTitleText.textContent === projectList[currentProjectIndex].name) {
         DOMhandler.renderNewTask(projectList[currentProjectIndex].tasks, projectList[currentProjectIndex].tasks.length-1, serializeProjectList, projectList);
     }
@@ -109,7 +112,7 @@ const setUpLocalStorage = (projectList) => {
 
 setUpLocalStorage(projectList);
 
-
+// If projectList has not previously created an "Inbox" Project Object, it will create it and push it to projectList
 if(projectList.length === 0) {
     let inboxTest = new Project("Inbox");
     projectList.push(inboxTest);
