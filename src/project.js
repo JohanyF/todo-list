@@ -16,15 +16,32 @@ export default class Project {
     }
 
 
-    addTask(title, description, date, priority, project) {
-        let task = new Task(title, description, date, priority, project);
+    addTask(title, description, date, priority, project, isChecked) {
+        let task = new Task(title, description, date, priority, project, isChecked);
         this.#tasks.push(task);
-        // console.log(this.#tasks);
     }
 
-    printTasks() {
-        this.#tasks.forEach((task) => {
-            console.log(`${task.title} | ${task.description} | ${task.date} | ${task.priority} | ${task.project}`);
-        })
+    // Rename the methods if you will like
+    // Add comment that describes what this method does, will be helpful if you are looking back at your project
+    serialize() {
+        return JSON.stringify({
+            name: this._name,
+            tasks: this.#tasks.map(task => task.serialize())
+        });
+    }
+
+    // Rename the methods if you will like
+    // Add comment that describes what this method does, will be helpful if you are looking back at your project
+    static deserialize(jsonString) {
+        const data = JSON.parse(jsonString);
+        const project = new Project(data.name);
+
+
+        data.tasks.forEach(taskData => {
+            const task = Task.deserialize(taskData);
+            project.#tasks.push(task);
+        });
+
+        return project;
     }
 }
