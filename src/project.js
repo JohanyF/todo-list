@@ -7,6 +7,7 @@ export default class Project {
         this._name = name;
     }
 
+    // Getter methods
     get tasks() {
         return this.#tasks;
     }
@@ -21,8 +22,12 @@ export default class Project {
         this.#tasks.push(task);
     }
 
-    // Rename the methods if you will like
-    // Add comment that describes what this method does, will be helpful if you are looking back at your project
+    /*
+     serializes the Project object into a JSON string and converts the Project instance into a plain object,
+     serializes its tasks, and then into a JSON string
+
+     The method returns a JSON string representation o f the Project instance
+    */
     serialize() {
         return JSON.stringify({
             name: this._name,
@@ -30,8 +35,12 @@ export default class Project {
         });
     }
 
-    // Rename the methods if you will like
-    // Add comment that describes what this method does, will be helpful if you are looking back at your project
+    /*
+     Deserializes a JSON string into a Project object by taking a JSON string, parses it to extract the data, and
+     creates a new Project instance with the extracted JSON data, including deserializing each task
+
+     The method returns a new Project object constructed from the parsed data
+    */
     static deserialize(jsonString) {
         const data = JSON.parse(jsonString);
         const project = new Project(data.name);
