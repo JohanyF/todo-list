@@ -9,6 +9,7 @@ export default class Task {
         this._isChecked = isChecked;
     }
 
+    // Getter methods
     get title() {
         return this._title;
     }
@@ -37,6 +38,7 @@ export default class Task {
         this._title = title;
     }
 
+    // Setter methods
     set description(description) {
         this._description = description;
     }
@@ -54,6 +56,12 @@ export default class Task {
         this._isChecked = isChecked;
     }
 
+    /*
+     serializes the Task object into a JSON string and converts the Task instance into a plain object
+     and then into a JSON string
+
+     The method returns a JSON string representation o f the Task instance
+    */
     serialize() {
         return JSON.stringify({
             title: this.title,
@@ -65,6 +73,12 @@ export default class Task {
         });
     }
 
+    /*
+     Deserializes a JSON string into a Task object by taking a JSON string, parses it to extract the data, and
+     creates a new Task instance with the extracted JSON data.
+
+     The method returns a new Task object constructed from the parsed data
+    */
     static deserialize(jsonString) {
         const data = JSON.parse(jsonString);
         return new Task(data.title, data.description, data.date, data.priority, data.project, data.isChecked);
