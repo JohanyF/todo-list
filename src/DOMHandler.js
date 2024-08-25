@@ -146,7 +146,7 @@ export default class DOMHandler {
         addProjectBtn.prepend(addIcon);
     }
 
-    renderNewTask(t, index) {
+    renderNewTask(t, index, serializeProjectList, projectList) {
         const tasksContainer = document.querySelector(".tasks-container");
 
         const task = document.createElement("div")
@@ -162,6 +162,8 @@ export default class DOMHandler {
         checkbox.name = 'task-completed';
         checkbox.id = 'task-completed';
 
+        // console.log(typeof serializeProjectList);
+
         if(t[index].isChecked === true) {
             checkbox.checked = true;
             task.classList.add("faded");
@@ -172,7 +174,9 @@ export default class DOMHandler {
             task.classList.toggle("faded");
             task.classList.toggle("line-through");
             t[index].isChecked = !t[index].isChecked;
+            serializeProjectList(projectList);
         })
+        
 
         checkboxContainer.appendChild(checkbox);
         
@@ -226,7 +230,7 @@ export default class DOMHandler {
         edit.appendChild(editToolTipText);
 
         edit.addEventListener("click", () => {
-            this.editTaskInfo(t[index], task);
+            this.editTaskInfo(t[index], task, serializeProjectList, projectList);
 
         })
 
@@ -245,10 +249,11 @@ export default class DOMHandler {
         deleteDiv.appendChild(deleteToolTipText);
 
         deleteDiv.addEventListener("click", () => {
-            t.splice(index, 1);
+            // t.splice(index, 1);
+            t.splice(parseInt(task.dataset.task, 10), 1);
             this.removeTask(task)
             this.updateDataTask(t);
-
+            serializeProjectList(projectList);
         })
 
 
@@ -269,7 +274,7 @@ export default class DOMHandler {
 
     }
 
-    renderNewProject(projName, projects) {
+    renderNewProject(projName, projects, serializeProjectList) {
         const projectTitleText = document.querySelector(".projectTitleText");
         projectTitleText.textContent= projName;
         const projectListElem = document.querySelector(".projects-list")
@@ -322,19 +327,66 @@ export default class DOMHandler {
                 index++;
             })
 
-            this.renderExistingTasksFromProject(projects[currentProjectIndex].tasks);
+            this.renderExistingTasksFromProject(projects[currentProjectIndex].tasks, projects, serializeProjectList);
         })
     }
 
-    renderExistingTasksFromProject(selectedProjectTasks) {
+    renderExistingTasksFromProject(selectedProjectTasks, serializeProjectList, projectList) {
         for(let i = 0; i < selectedProjectTasks.length; i++) {
-            this.renderNewTask(selectedProjectTasks, i);
+            this.renderNewTask(selectedProjectTasks, i, serializeProjectList, projectList);
         }
     }
 
     renderExistingProject(projName) {
         const projectTitleText = document.querySelector(".projectTitleText");
         projectTitleText.textContent= projName;
+    }
+
+    renderProjectsFromLocalStorage(projName, projects, serializeProjectList) {
+        const projectTitleText = document.querySelector(".projectTitleText");
+        projectTitleText.textContent= projName;
+        const projectListElem = document.querySelector(".projects-list")
+
+        const projectSection = document.createElement('li');
+        projectSection.textContent = projName;
+        projectSection.classList.add("project-section");
+        projectSection.setAttribute("data-project", projects.length-1);
+        
+        const HamburgerIcon = new Image();
+        HamburgerIcon.src = HamburgerMenuIcon;
+        HamburgerIcon.classList.add("icons-24");
+        
+        projectSection.prepend(HamburgerIcon);
+        
+        projectListElem.appendChild(projectSection);
+        
+        const everyProjectSection = document.querySelectorAll(".project-section");
+
+        const tasksContaier = document.querySelector(".tasks-container");
+        this.removeChildrenElementsFromParentElem(tasksContaier);
+        
+        
+        projectSection.addEventListener("click", (event) => {
+
+            const everyProjectSection = document.querySelectorAll(".project-section");
+            // this.switchSelectedProject(event.target, everyProjectSection);
+            this.switchSelectedProject(event.target);
+            this.removeChildrenElementsFromParentElem(tasksContaier);
+
+            this.renderExistingProject(projName);
+
+
+            let currentProjectIndex = 0;
+            projects.forEach((project, index=0) => {
+                if(project.name === event.target.textContent) {
+                    currentProjectIndex = index;
+
+                }
+                index++;
+            })
+
+            this.renderExistingTasksFromProject(projects[currentProjectIndex].tasks, serializeProjectList, projects);
+        })
     }
 
     switchSelectedProject(selectedProj) {
@@ -382,7 +434,7 @@ export default class DOMHandler {
         }
     }
 
-    addEventListenersToInbox(projectList) {
+    addEventListenersToInbox(projectList, serializeProjectList) {
         const inboxSection = document.querySelector("#inbox");
         inboxSection.addEventListener("click", (event) => {
             const tasksContaier = document.querySelector(".tasks-container");
@@ -393,15 +445,14 @@ export default class DOMHandler {
 
             this.renderExistingProject("Inbox");
 
-            this.renderExistingTasksFromProject(projectList[0].tasks);
+            this.renderExistingTasksFromProject(projectList[0].tasks, serializeProjectList, projectList);
             
         })
     }
 
-    addEventListenersToToday(projectList, todayDate) {
+    addEventListenersToToday(projectList, serializeProjectList, todayDate) {
         const todaySection = document.querySelector("#today");
         todaySection.addEventListener("click", (event) => {
-            let todayTasks = [];
             const tasksContaier = document.querySelector(".tasks-container");
 
             this.switchSelectedProject(event.target);
@@ -414,7 +465,7 @@ export default class DOMHandler {
                 let index = 0;
                 project.tasks.forEach((task) => {
                     if(task.date === todayDate) {
-                        this.renderNewTask(project.tasks, index);
+                        this.renderNewTask(project.tasks, index, serializeProjectList, projectList);
                     }
                     index++;
                 })
@@ -423,7 +474,7 @@ export default class DOMHandler {
         })
     }
 
-    addEventListenersToUpcoming(projectList, todayDate) {
+    addEventListenersToUpcoming(projectList, serializeProjectList, todayDate) {
         const upcomingSection = document.querySelector("#upcoming");
         upcomingSection.addEventListener("click", (event) => {
             let upcomingTasks = [];
@@ -439,7 +490,7 @@ export default class DOMHandler {
                 let index = 0;
                 project.tasks.forEach((task) => {
                     if(task.date > todayDate) {
-                        this.renderNewTask(project.tasks, index);
+                        this.renderNewTask(project.tasks, index, serializeProjectList, projectList);
                         upcomingTasks.push(task);
                     }
                     index++;
@@ -449,7 +500,7 @@ export default class DOMHandler {
         })
     }
 
-    editTaskInfo(taskInfo, selectedTask) {
+    editTaskInfo(taskInfo, selectedTask, serializeProjectList, projectList) {
         const editTaskForm = document.querySelector("#edit-task-modal")
 
         editTaskForm.showModal();
@@ -461,10 +512,12 @@ export default class DOMHandler {
 
         inputTask.value = taskInfo.title
         inputDescription.value = taskInfo.description
+
         inputDate.value = taskInfo.date
         inputPriority.value = taskInfo.priority
 
         const saveBtn = document.querySelector(".save-btn");
+        
         // cloning the button allows the new node to not have any event listeners that were orinally attached to the button. 
         // This is used to "reset" the element and not let any old event listeners from causing unexpected behavior like multiple clicks
         const newSaveBtn = saveBtn.cloneNode(true);
@@ -485,6 +538,7 @@ export default class DOMHandler {
             taskInfo.priority = inputPriority.value
 
             this.updateTextContentFromTask(taskInfo, selectedTask);
+            serializeProjectList(projectList);
             editTaskForm.close();
         })
 
