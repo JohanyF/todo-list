@@ -3,31 +3,26 @@ import './style.css';
 import Project from './project.js';
 import DOMHandler from './DOMHandler.js';
 
+const serializeProjectList = (projectList) => {
+    const serializedProjects = projectList.map(project => project.serialize());
+    const stringifySerializedProjects = JSON.stringify(serializedProjects);
+    localStorage.setItem("projects", stringifySerializedProjects);
+}
+
 let DOMhandler = new DOMHandler();
 
 DOMhandler.loadSVGs();
 let projectList = [];
-let inboxTest = new Project("Inbox");
-projectList.push(inboxTest);
 
-// let currentDate = new Date().toJSON().slice(0, 10);
 let todayDate = new Date();
 const timeZoneOffset = todayDate.getTimezoneOffset();
 todayDate = new Date(todayDate.getTime() - (timeZoneOffset*60*1000));
 
 DOMhandler.addDisplayNone();
-DOMhandler.addEventListenersToInbox(projectList);
+DOMhandler.addEventListenersToInbox(projectList, serializeProjectList);
 // currentDate.toISOString().split('T')[0] gets the date in yyyy-mm-dd format
-DOMhandler.addEventListenersToToday(projectList, todayDate.toISOString().split('T')[0]);
-DOMhandler.addEventListenersToUpcoming(projectList, todayDate.toISOString().split('T')[0]);
-
-// PROJECTS ARE USED FOR TESTING PURPOSES 
-// let project1 = new Project("project1");
-// projectList.push(project1);
-// let project2 = new Project("project2");
-// projectList.push(project2);
-// let project3 = new Project("project3");
-// projectList.push(project3);
+DOMhandler.addEventListenersToToday(projectList, serializeProjectList, todayDate.toISOString().split('T')[0]);
+DOMhandler.addEventListenersToUpcoming(projectList, serializeProjectList, todayDate.toISOString().split('T')[0]);
 
 const addBtn = DOMhandler.addBtn;
 const addProjectBtn = DOMhandler.addProjectBtn;
@@ -36,10 +31,11 @@ const submitBtn = DOMhandler.submitBtn;
 const checkBtn = DOMhandler.checkBtn;
 const cancelProjectBtn = DOMhandler.cancelProjectBtn;
 
-
 const createNewProject = (projectName) => {
     const project = new Project(projectName);
     projectList.push(project);
+    
+    serializeProjectList(projectList);
 }
 
 addBtn.addEventListener("click", () => {
@@ -56,7 +52,6 @@ cancelBtn.addEventListener("click", (event) => {
 submitBtn.addEventListener("click", (event) => {
     event.preventDefault();
 
-    // Make this a function that return the index of the project we are adding a task to!
     let currentProjectIndex = 0;
     projectList.forEach((project, index=0) => {
         if(project.name.toLowerCase() === DOMhandler.projects.value) {
@@ -65,13 +60,13 @@ submitBtn.addEventListener("click", (event) => {
         }
         index++;
     })
-    // 
 
+    projectList[currentProjectIndex].addTask(DOMhandler.taskTitle.value, DOMhandler.description.value, DOMhandler.date.value, DOMhandler.priority.value, DOMhandler.projects.value, false);
 
-    projectList[currentProjectIndex].addTask(DOMhandler.taskTitle.value, DOMhandler.description.value, DOMhandler.date.value, DOMhandler.priority.value, DOMhandler.projects.value);
+    serializeProjectList(projectList);
 
     if(DOMhandler.projectTitleText.textContent === projectList[currentProjectIndex].name) {
-        DOMhandler.renderNewTask(projectList[currentProjectIndex].tasks, projectList[currentProjectIndex].tasks.length-1);
+        DOMhandler.renderNewTask(projectList[currentProjectIndex].tasks, projectList[currentProjectIndex].tasks.length-1, serializeProjectList, projectList);
     }
     DOMhandler.taskModal.close();
     document.taskForm.reset();
@@ -85,7 +80,7 @@ checkBtn.addEventListener("click", (event)=> {
     event.preventDefault();
     DOMhandler.projectForm.classList.add('none');
     createNewProject(DOMhandler.projectName.value);
-    DOMhandler.renderNewProject(DOMhandler.projectName.value, projectList)
+    DOMhandler.renderNewProject(DOMhandler.projectName.value, projectList, serializeProjectList)
     document.addProjectForm.reset();
 })
 
@@ -93,3 +88,34 @@ cancelProjectBtn.addEventListener("click", () => {
     DOMhandler.projectForm.classList.add('none');
     document.addProjectForm.reset();
 })
+
+const setUpLocalStorage = (projectList) => {
+    const savedProjectJson = localStorage.getItem("projects");
+
+    if(savedProjectJson) {
+        const parsedProjectList = JSON.parse(savedProjectJson);
+
+        const restoredProject = parsedProjectList.map(projectData => Project.deserialize(projectData));
+
+        for(let i = 0; i < restoredProject.length; i++) {
+            projectList.push(restoredProject[i]);
+        }
+
+        for(let i = 1; i < restoredProject.length; i++) {
+            DOMhandler.renderProjectsFromLocalStorage(restoredProject[i].name, projectList, serializeProjectList);
+        }
+    }
+}
+
+setUpLocalStorage(projectList);
+
+
+if(projectList.length === 0) {
+    let inboxTest = new Project("Inbox");
+    projectList.push(inboxTest);
+} else {
+    DOMhandler.renderExistingProject(projectList[0].name);
+    DOMhandler.renderExistingTasksFromProject(projectList[0].tasks, serializeProjectList, projectList);
+}
+
+
