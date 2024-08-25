@@ -1,12 +1,12 @@
 
 export default class Task {
-    #isChecked = false;
-    constructor(title, description, date, priority, project) {
+    constructor(title, description, date, priority, project, isChecked) {
         this._title = title;
         this._description = description;
         this._date = date;
         this._priority = priority;
         this._project = project;
+        this._isChecked = isChecked;
     }
 
     get title() {
@@ -30,7 +30,7 @@ export default class Task {
     }
 
     get isChecked() {
-        return this.#isChecked;
+        return this._isChecked;
     }
 
     set title(title) {
@@ -51,6 +51,22 @@ export default class Task {
     }
 
     set isChecked(isChecked) {
-        this.#isChecked = isChecked;
+        this._isChecked = isChecked;
+    }
+
+    serialize() {
+        return JSON.stringify({
+            title: this.title,
+            description: this.description,
+            date: this.date,
+            priority: this.priority,
+            project: this.project,
+            isChecked: this.isChecked
+        });
+    }
+
+    static deserialize(jsonString) {
+        const data = JSON.parse(jsonString);
+        return new Task(data.title, data.description, data.date, data.priority, data.project, data.isChecked);
     }
 }
