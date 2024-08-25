@@ -16,7 +16,6 @@ export default class DOMHandler {
     projectForm = document.querySelector(".none");
     projectName = document.querySelector("#add-project");
 
-    // inboxSection = document.querySelector("#inbox");
 
     checkBtn = document.querySelector(".submit-project-btn");
     cancelProjectBtn = document.querySelector(".cancel-project-btn");
@@ -30,6 +29,7 @@ export default class DOMHandler {
     projectTitleText = document.querySelector(".projectTitleText");
 
 
+    // Getter methods
     get taskModal() {
         return this._taskModal;
     }
@@ -88,7 +88,7 @@ export default class DOMHandler {
         return this._projextTitleText;
     }
 
-
+    // loads all SVGs that will need to be rendered when the page loads up
     loadSVGs() {
         const hamContainer = document.querySelector(".hamburger-icon");
 
@@ -162,7 +162,6 @@ export default class DOMHandler {
         checkbox.name = 'task-completed';
         checkbox.id = 'task-completed';
 
-        // console.log(typeof serializeProjectList);
 
         if(t[index].isChecked === true) {
             checkbox.checked = true;
@@ -389,6 +388,7 @@ export default class DOMHandler {
         })
     }
 
+    // Switches "selected" CSS class based on which project has been clicked on
     switchSelectedProject(selectedProj) {
         let unselectProj;
 
@@ -517,7 +517,7 @@ export default class DOMHandler {
         inputPriority.value = taskInfo.priority
 
         const saveBtn = document.querySelector(".save-btn");
-        
+
         // cloning the button allows the new node to not have any event listeners that were orinally attached to the button. 
         // This is used to "reset" the element and not let any old event listeners from causing unexpected behavior like multiple clicks
         const newSaveBtn = saveBtn.cloneNode(true);
